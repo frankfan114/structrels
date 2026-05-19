@@ -29,7 +29,7 @@ LLAMA_13B_NAME = "llama-13b"
 LLAMA_30B_NAME = "llama-30b"
 LLAMA_NAME_SHORT = "llama"
 
-DOWNLOADABLE_MODELS = frozenset({GPT_J_NAME, GPT_NEO_X_NAME, "gpt2-xl", "meta-llama/Llama-3.1-8B"})
+DOWNLOADABLE_MODELS = frozenset({GPT_J_NAME, GPT_NEO_X_NAME, "gpt2-xl", "meta-llama/Llama-3.1-8B", "meta-llama/Meta-Llama-3-8B"})
 
 
 @dataclass(frozen=True)

@@ -96,6 +96,7 @@ def sweep(
             )
             # prompt_template = " {} :"  # bare prompt with colon
 
+        torch.cuda.empty_cache()
         relation_result = SweepRelationResults(
             relation_name=relation.name,
             trials=[],
@@ -116,6 +117,14 @@ def sweep(
             # ICL prompt examples.
             train_relation, test_relation = relation.split(n_train_samples)
             train_samples = train_relation.samples
+
+            # Pre-limit before filtering to avoid OOM on large relations.
+            # Filtering runs inference on all samples, so we cap before that step.
+            prefilter_limit = (limit_test_samples * 3) if limit_test_samples is not None else 600
+            if len(test_relation.samples) > prefilter_limit:
+                test_relation = test_relation.set(
+                    samples=test_relation.samples[:prefilter_limit]
+                )
 
             logger.info(f"will train using: {[str(x) for x in train_samples]}")
 

@@ -46,8 +46,12 @@ def main(args: argparse.Namespace) -> None:
         mt = models.load_model("EleutherAI/gpt-neox-20b", device=device)
     elif args.model == "llama" :
         mt = models.load_model("meta-llama/Llama-2-13b-hf", device=device)
+    elif args.model == "llama3":
+        mt = models.load_model("meta-llama/Meta-Llama-3-8B", device=device)
     elif args.model == "llama31" :
         mt = models.load_model("meta-llama/Llama-3.1-8B", device=device)
+    elif args.model == "gpt2xl":
+        mt = models.load_model("gpt2-xl", device=device)
     else:
         raise NotImplementedError
 
@@ -65,6 +69,7 @@ def main(args: argparse.Namespace) -> None:
             resume=args.resume,
             subj_token_filter=args.subj_token_filter,
             use_bare_prompt=args.use_bare_prompt,
+            limit_test_samples=args.limit_test_samples,
         )
         for relation in results.relations:
             log_msg = f"{relation.relation_name}"
@@ -76,6 +81,7 @@ def main(args: argparse.Namespace) -> None:
             logger.info(log_msg)
             best_by_f = relation.best_by_faithfulness()
             best_by_e = relation.best_by_efficacy()
+            rel_slug = relation.relation_name.replace(" ", "_").replace("'", "")
             hparams.RelationHParams(
                 relation_name=relation.relation_name,
                 h_layer=best_by_f.layer,  # type: ignore
@@ -84,7 +90,7 @@ def main(args: argparse.Namespace) -> None:
                 beta=best_by_f.beta.mean,
                 model_name=mt.name,
             ).save(
-                os.path.join(args.hparams_path, mt.name, relation.relation_name + ".json")
+                os.path.join(args.hparams_path, mt.name, rel_slug + ".json")
             )
 
     results_file = experiment.results_dir / "results_all.json"

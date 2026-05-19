@@ -1,0 +1,34 @@
+capital
+continent
+country
+country of citizenship
+country of origin
+developer
+employer
+field of work
+genre
+headquarters location
+instrument
+language of work or name
+languages spoken or written
+located in administrative entity
+location
+location of formation
+manufacturer
+member of
+named after
+native language
+occupation
+official language
+original language of film or TV show
+original network
+owned by
+place of birth
+place of death
+position held
+position played on team
+record label
+religion or worldview
+sport
+twinned administrative body
+work location

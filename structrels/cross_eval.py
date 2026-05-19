@@ -222,8 +222,12 @@ def load_model_by_name(model_name: str, device: torch.device, args: argparse.Nam
         return models.load_model("gptj", device=device, fp16=args.fp16)
     if model_name == "neo":
         return models.load_model("EleutherAI/gpt-neox-20b", device=device, fp16=args.fp16)
+    if model_name == "llama3":
+        return models.load_model("meta-llama/Meta-Llama-3-8B", device=device, fp16=args.fp16)
     if model_name == "llama31":
         return models.load_model("meta-llama/Llama-3.1-8B", device=device, fp16=args.fp16)
+    if model_name == "gpt2xl":
+        return models.load_model("gpt2-xl", device=device, fp16=args.fp16)
     raise NotImplementedError(f"Unsupported model: {model_name}")
 
 
@@ -265,7 +269,7 @@ def main() -> None:
     with open(f"{result_prefix}_cross_eval_results.pkl", "wb") as f:
         pickle.dump(results, f)
 
-    relation_names = [r.name for r in dataset.relations]
+    relation_names = [r.name for r in dataset.relations if r.name in matrices]
     heatmap_data = make_heatmap_data(results, relation_names)
 
     plot_heatmap(heatmap_data, relation_names, relation_names, result_prefix=str(result_prefix))
