@@ -4,6 +4,22 @@ Supplementary material for the NeurIPS 2025 Spotlight paper [The Structure of Re
 
 This repository contains datasets and code for cross-evaluating relation decoders, and training tensor networks for relation decoding in large language models (LLMs). For full details, see the paper.
 
+## FYP Usage
+
+This fork is also used as a supporting repository for the FYP:
+
+**Revisiting the Locate-and-Edit Pipeline for Knowledge Editing in Large Language Models**
+
+Within that project, `structrels` provides the relation-structure evidence behind the property-level residue-factor experiment. The relevant workflow is:
+
+1. Convert CounterFact relations to the structrels relation format with `scripts/convert_counterfact.py`.
+2. Run relation decoder sweeps and cross-evaluation to produce `*_cross_eval_results.pkl`.
+3. Slice the cross-faithfulness matrix into property groups with `scripts/plot_property_group_heatmaps.py`.
+4. Optionally build averaged property matrices with `scripts/property_matrices.py`.
+5. Mirror the validated property groups into the AlphaEdit repo's `experiments/property_groups.py`, where `AlphaEdit_property_keykl` samples property-level negative subjects for residue computation.
+
+See `fyp/README.md` for the exact bridge between this repository and the AlphaEdit thesis repository.
+
 
 ## Dataset
 
